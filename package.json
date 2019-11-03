@@ -1,0 +1,25 @@
+{
+  "name": "web-support-service",
+  "version": "2.0.1",
+  "description": "Backend v2 API service for website & personal services",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohmishra/web-support-service.git"
+  },
+  "keywords": [
+    "APIv2",
+    "API",
+    "web-support",
+    "crazydeveloper.fail"
+  ],
+  "author": "Rohan M.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohmishra/web-support-service/issues"
+  },
+  "homepage": "https://github.com/rohmishra/web-support-service#readme"
+}
