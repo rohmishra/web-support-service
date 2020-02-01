@@ -4,6 +4,7 @@
   "description": "Backend v2 API service for website & personal services",
   "main": "main.js",
   "scripts": {
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/rohmishra/web-support-service/issues"
   },
-  "homepage": "https://github.com/rohmishra/web-support-service#readme"
+  "homepage": "https://github.com/rohmishra/web-support-service#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11"
+  }
 }
