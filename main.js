@@ -2,10 +2,25 @@
 require('dotenv').config();
 
 const express = require('express');
+const db = require('mongoose');
 const App = express();
 
 const serve_port = process.env.PORT || process.env.TEST_PORT;
 const mongo_URI = process.env.MONGODB_URI || process.env.DB_HOST;
+
+const mongo_options = {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+};
+
+db.connect(mongo_URI + 'website_dyndata', mongo_options);
+db.connection
+	.once('open', (_) => {
+		console.log('CONNECTED TO DB at ' + db.connection.host);
+	})
+	.on('error', (error) => {
+		console.log('Error:' + error);
+	});
 
 App.get('/', (req, res) => {
 	res.send(`Working.`);
