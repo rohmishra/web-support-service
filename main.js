@@ -18,7 +18,7 @@ db.connection
 	.once('open', (_) => {
 		console.log('CONNECTED TO DB at ' + db.connection.host);
 	})
-	.on('error', (error) => {
+	.catch((error) => {
 		console.log('Error:' + error);
 	});
 
