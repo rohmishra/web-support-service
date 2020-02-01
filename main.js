@@ -13,7 +13,7 @@ const mongo_options = {
 	useUnifiedTopology: true
 };
 
-db.connect(mongo_URI + '/website_dyndata', mongo_options);
+db.connect(mongo_URI, mongo_options);
 db.connection
 	.once('open', (_) => {
 		console.log('CONNECTED TO DB at ' + db.connection.host);
