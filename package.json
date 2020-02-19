@@ -4,7 +4,7 @@
   "description": "Backend v2 API service for website & personal services",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "node main.js --unhandled-rejections=strict",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
