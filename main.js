@@ -1,5 +1,5 @@
 // Load env vars
-const env = require('dotenv');
+
 const express = require('express');
 const bodyparser = require('body-parser');
 const mon = require('mongoose');
@@ -14,6 +14,7 @@ if (envmode != 'production') {
 	console.info(`Running in ${envmode} mode.`);
 	App.use(logger('combined'));
 	// Load config Vars from .env
+	const env = require('dotenv');
 	env.config();
 }
 
