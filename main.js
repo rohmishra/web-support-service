@@ -1,8 +1,8 @@
 // Load env vars
 require('dotenv').config();
 
-const express = require('express');
-const db = require('mongoose');
+import express from 'express';
+import { connect, connection } from 'mongoose';
 const App = express();
 
 const serve_port = process.env.PORT || process.env.TEST_PORT;
@@ -13,10 +13,10 @@ const mongo_options = {
 	useUnifiedTopology: true
 };
 
-db.connect(mongo_URI, mongo_options);
-db.connection
+connect(mongo_URI, mongo_options);
+connection
 	.once('open', (_) => {
-		console.log('CONNECTED TO DB at ' + db.connection.host);
+		console.log('CONNECTED TO DB at ' + connection.host);
 	})
 	.catch((error) => {
 		console.log('Error:' + error);
