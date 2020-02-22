@@ -1,25 +1,47 @@
 // Load env vars
-require('dotenv').config();
+import env from 'dotenv';
+import express from 'express';
+import bodyparser from 'body-parser';
+import mon from 'mongoose';
+import logger from 'morgan'; // Adds Logging for dev mode.
 
-const express = require('express');
-const db = require('mongoose');
 const App = express();
+App.use(bodyparser.json());
 
-const serve_port = process.env.PORT || process.env.TEST_PORT;
-const mongo_URI = process.env.MONGODB_URI || process.env.DB_HOST;
+// Config for TEST MODE.
+const envmode = process.env.NODE_ENV || 'DEV';
+if (envmode != 'production') {
+	console.info(`Running in ${envmode} mode.`);
+	App.use(logger('combined'));
+	// Load config Vars from .env
+	env.config();
+}
+
+// Config
+const serve_port = process.env.PORT;
+const mongo_URI = process.env.MONGODB_URI;
+
+// load routes
+import webActions from './routes/WebActions.js'; // WebActions
+App.use('/WebActions', webActions);
 
 const mongo_options = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 };
 
-db.connect(mongo_URI, mongo_options);
-db.connection
+// Connect to DB.
+mon.connect(mongo_URI, mongo_options);
+mon.connection
 	.once('open', (_) => {
-		console.log('CONNECTED TO DB at ' + db.connection.host);
+		if (envmode === 'DEV') {
+			console.log('CONNECTED TO DB at ' + mon.connection.host);
+		}
 	})
 	.catch((error) => {
-		console.log('Error:' + error);
+		if (envmode === 'DEV') {
+			console.log('Error:' + error);
+		}
 	});
 
 App.get('/', (req, res) => {
