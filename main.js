@@ -1,9 +1,9 @@
 // Load env vars
-import env from 'dotenv';
-import express from 'express';
-import bodyparser from 'body-parser';
-import mon from 'mongoose';
-import logger from 'morgan'; // Adds Logging for dev mode.
+const env = require('dotenv');
+const express = require('express');
+const bodyparser = require('body-parser');
+const mon = require('mongoose');
+const logger = require('morgan'); // Adds Logging for dev mode.
 
 const App = express();
 App.use(bodyparser.json());
@@ -22,7 +22,7 @@ const serve_port = process.env.PORT;
 const mongo_URI = process.env.MONGODB_URI;
 
 // load routes
-import webActions from './routes/WebActions.js'; // WebActions
+const webActions = require('./routes/WebActions.js'); // WebActions
 App.use('/WebActions', webActions);
 
 const mongo_options = {

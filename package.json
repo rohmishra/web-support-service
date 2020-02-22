@@ -28,7 +28,6 @@
     "express": "^4.17.1",
     "mongoose": "^5.8.11"
   },
-  "type": "module",
   "devDependencies": {
     "dotenv": "^8.2.0",
     "morgan": "^1.9.1"
