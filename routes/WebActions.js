@@ -1,5 +1,5 @@
-import express from 'express';
-import userModel from '../models/ConsultUser.js';
+const express = require('express');
+const userModel = require('../models/ConsultUser.js');
 var router = express.Router();
 
 // DEV MODE LOGGING
@@ -23,4 +23,4 @@ router.post('/contactMeAction', (req, res) => {
 	res.send('Received!');
 });
 
-export default router;
+module.exports = router;
