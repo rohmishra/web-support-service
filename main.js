@@ -3,7 +3,6 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const mon = require('mongoose');
-const logger = require('morgan'); // Adds Logging for dev mode.
 
 const App = express();
 App.use(bodyparser.json());
@@ -12,6 +11,7 @@ App.use(bodyparser.json());
 const envmode = process.env.NODE_ENV || 'DEV';
 if (envmode != 'production') {
 	console.info(`Running in ${envmode} mode.`);
+	const logger = require('morgan'); // Adds Logging for dev mode.
 	App.use(logger('combined'));
 	// Load config Vars from .env
 	const env = require('dotenv');
