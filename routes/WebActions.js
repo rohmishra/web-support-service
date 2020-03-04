@@ -1,5 +1,6 @@
 const express = require('express');
 const userModel = require('../models/ConsultUser.js');
+const cors = require('cors');
 var router = express.Router();
 
 // DEV MODE LOGGING
@@ -10,6 +11,8 @@ router.use((req, res, next) => {
 		next();
 	}
 });
+
+router.options('*', cors());
 
 // Service contactMeAction
 router.post('/contactMeAction', (req, res) => {
