@@ -12,10 +12,17 @@ router.use((req, res, next) => {
 	}
 });
 
-router.options('*', cors());
+// Configure cors options
+const corsOptions = {
+	origin: 'https://www.crazydeveloper.fail',
+	optionsSuccessStatus: 200
+};
+
+// Add cors to preflight / OPTIONS
+router.options('*', cors(corsOptions));
 
 // Service contactMeAction
-router.post('/contactMeAction', (req, res) => {
+router.post('/contactMeAction', cors(corsOptions), (req, res) => {
 	// Get info from request into vars.
 	let name = req.body.name;
 	let email = req.body.mail;
