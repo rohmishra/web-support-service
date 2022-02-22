@@ -9,13 +9,18 @@ App.use(bodyparser.json());
 
 // Config for TEST MODE.
 const envmode = process.env.NODE_ENV || 'DEV';
-if (envmode != 'production') {
+if (envmode != 'live') {
 	console.info(`Running in ${envmode} mode.`);
 	const logger = require('morgan'); // Adds Logging for dev mode.
 	App.use(logger('combined'));
 	// Load config Vars from .env
 	const env = require('dotenv');
 	env.config();
+}
+
+// IF CI specific setup is required; use CI check
+if (envmode === "ci") {
+	console.info("=== RUN: CI TEST ===");
 }
 
 // Config
@@ -36,7 +41,7 @@ mon.connect(mongo_URI, mongo_options);
 mon.connection
 	.once('open', (_) => {
 		if (envmode === 'DEV') {
-			console.log('CONNECTED TO DB at ' + mon.connection.host);
+			console.info('CONNECTED TO DB at ' + mon.connection.host);
 		}
 	})
 	.catch((error) => {
@@ -47,13 +52,13 @@ mon.connection
 
 App.get('/', (req, res) => {
 	res.send(
-		`You have reached support service host for <a href="https://rmishra.me">my personal site!</a>
-		<br />Why dont you visit that instead!!`
+		`<html><title>service provider</title>You have reached support service host for <a href="https://rmishra.me">my personal site!</a>
+		<br />Why dont you visit that instead!!</html>`
 	);
 });
 
 // App.use('/');
 
 App.listen(serve_port, (e) => {
-	console.log(`listening on ${serve_port}. Connecting to DB at ${mongo_URI}`);
+	console.log(`listening on ${serve_port}. Connecting to DB`);
 });

@@ -5,4 +5,3 @@
     - Interactive Project Showcase
     - Metric Management
     - Misc API(v2)
-Current API LEVEL: 2 (MAJOR) 1 (MINOR)
