@@ -47,7 +47,7 @@ mon.connection
 
 App.get('/', (req, res) => {
 	res.send(
-		`You have reached support service host for <a href="https://www.crazydeveloper.fail">my personal site!</a>
+		`You have reached support service host for <a href="https://rmishra.me">my personal site!</a>
 		<br />Why dont you visit that instead!!`
 	);
 });
