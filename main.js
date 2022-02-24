@@ -24,7 +24,7 @@ if (envmode === "ci") {
 }
 
 // Config
-const serve_port = process.env.PORT;
+const serve_port = process.env.mongo_port;
 const mongo_URI = process.env.MONGODB_URI;
 
 // load routes
@@ -38,17 +38,6 @@ const mongo_options = {
 
 // Connect to DB.
 mon.connect(mongo_URI, mongo_options);
-mon.connection
-	.once('open', (_) => {
-		if (envmode === 'DEV') {
-			console.info('CONNECTED TO DB at ' + mon.connection.host);
-		}
-	})
-	.catch((error) => {
-		if (envmode === 'DEV') {
-			console.log('Error:' + error);
-		}
-	});
 
 App.get('/', (req, res) => {
 	res.send(

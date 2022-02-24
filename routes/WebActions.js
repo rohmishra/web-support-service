@@ -36,7 +36,12 @@ router.post('/rme_cb_act_email', cors(corsOptions), (req, res) => {
 	if (envmode === 'DEV') {
 		console.log(`Processing request for ${name} at ${email}`);
 	}
-	userModel.create({ name: name, email: email });
+	try {
+		const user = await userModel.create({ name: name, email: email });
+	} catch (e) {
+		console.message("=== A fault occurred ===");
+		console.error(e.message);
+	}
 
 	// TODO: Send email verification
 	// const DOMAIN = "rmishra.me";
@@ -46,7 +51,7 @@ router.post('/rme_cb_act_email', cors(corsOptions), (req, res) => {
 	// 	to: "rohmish26@gmail.com",
 	// subject: `Hi, ${name} Lets Talk!`,
 	// 	template: "contact_verification",
-	// 	'h:X-Mailgun-Variables': {email_base64: base64(email), unique_token: entry.verification_token}
+	// 	'h:X-Mailgun-Variables': {email_base64: base64(email), unique_token: user.verification_token}
 	// };
 	// mg.messages().send(data, function (error, body) {
 	// 	console.log(body);
