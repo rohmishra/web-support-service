@@ -1,8 +1,12 @@
-// Load env vars
-
+const dotenv = require('dotenv');
 const express = require('express');
 const bodyparser = require('body-parser');
 const mon = require('mongoose');
+
+// Load env vars
+if (envmode != 'live') {
+	dotenv.config();
+}
 
 const App = express();
 App.use(bodyparser.json());
