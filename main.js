@@ -19,17 +19,13 @@ if (envmode != 'live') {
 }
 
 // IF CI specific setup is required; use CI check
-if (envmode === "ci") {
-	console.info("=== RUN: CI TEST ===");
+if (envmode === 'ci') {
+	console.info('=== RUN: CI TEST ===');
 }
 
 // Config
 const serve_port = process.env.mongo_port;
 const mongo_URI = process.env.MONGODB_URI;
-
-// load routes
-const webActions = require('./routes/WebActions.js'); // WebActions
-App.use('/WebActions', webActions);
 
 const mongo_options = {
 	useNewUrlParser: true,
@@ -39,15 +35,14 @@ const mongo_options = {
 // Connect to DB.
 mon.connect(mongo_URI, mongo_options);
 
+// load routes
+const webActions = require('./routes/WebActions.js'); // WebActions
+App.use('/WebActions', webActions);
+
 App.get('/', (req, res) => {
-	res.send(
-		`<html><title>service provider</title>You have reached support service host for <a href="https://rmishra.me">my personal site!</a>
-		<br />Why dont you visit that instead!!</html>`
-	);
+	res.redirect(302, `//${process.env.DOMAIN}`);
 });
 
-// App.use('/');
-
-App.listen(serve_port, (e) => {
+App.listen(serve_port, () => {
 	console.log(`listening on ${serve_port}. Connecting to DB`);
 });

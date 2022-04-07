@@ -1,13 +1,30 @@
 const Mongoose = require('mongoose');
 const userSchema = Mongoose.Schema({
-	name: { type: String, required: true },
-	email: { type: String, required: true, lowercase: true },
+	name: {
+		type: String,
+		required: true
+	},
+	email: {
+		type: String,
+		required: true,
+		lowercase: true
+	},
 	verification: {
 		random_key: String,
-		isVerified: Boolean,
+		isVerified: {
+			type: Boolean,
+			default: false
+		}
 	},
-	last_updated: { type: Date, default: Date.now },
-	created_date: { type: Date, default: Date.now, immutable: true },
+	last_updated: {
+		type: Date,
+		default: Date.now
+	},
+	created_date: {
+		type: Date,
+		default: Date.now,
+		immutable: true
+	},
 	reff_by: Mongoose.SchemaTypes.ObjectId
 });
 
