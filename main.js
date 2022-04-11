@@ -1,15 +1,19 @@
-// Load env vars
-
+const dotenv = require('dotenv');
 const express = require('express');
 const bodyparser = require('body-parser');
 const mon = require('mongoose');
+
+// Load env vars
+if (envmode != 'live') {
+	dotenv.config();
+}
 
 const App = express();
 App.use(bodyparser.json());
 
 // Config for TEST MODE.
 const envmode = process.env.NODE_ENV || 'DEV';
-if (envmode != 'production') {
+if (envmode != 'live') {
 	console.info(`Running in ${envmode} mode.`);
 	const logger = require('morgan'); // Adds Logging for dev mode.
 	App.use(logger('combined'));
@@ -18,13 +22,14 @@ if (envmode != 'production') {
 	env.config();
 }
 
-// Config
-const serve_port = process.env.PORT;
-const mongo_URI = process.env.MONGODB_URI;
+// IF CI specific setup is required; use CI check
+if (envmode === 'ci') {
+	console.info('=== RUN: CI TEST ===');
+}
 
-// load routes
-const webActions = require('./routes/WebActions.js'); // WebActions
-App.use('/WebActions', webActions);
+// Config
+const serve_port = process.env.mongo_port;
+const mongo_URI = process.env.MONGODB_URI;
 
 const mongo_options = {
 	useNewUrlParser: true,
@@ -33,27 +38,15 @@ const mongo_options = {
 
 // Connect to DB.
 mon.connect(mongo_URI, mongo_options);
-mon.connection
-	.once('open', (_) => {
-		if (envmode === 'DEV') {
-			console.log('CONNECTED TO DB at ' + mon.connection.host);
-		}
-	})
-	.catch((error) => {
-		if (envmode === 'DEV') {
-			console.log('Error:' + error);
-		}
-	});
+
+// load routes
+const webActions = require('./routes/WebActions.js'); // WebActions
+App.use('/WebActions', webActions);
 
 App.get('/', (req, res) => {
-	res.send(
-		`You have reached support service host for <a href="https://www.crazydeveloper.fail">my personal site!</a>
-		<br />Why dont you visit that instead!!`
-	);
+	res.redirect(302, `//${process.env.DOMAIN}`);
 });
 
-// App.use('/');
-
-App.listen(serve_port, (e) => {
-	console.log(`listening on ${serve_port}. Connecting to DB at ${mongo_URI}`);
+App.listen(serve_port, () => {
+	console.log(`listening on ${serve_port}. Connecting to DB`);
 });
