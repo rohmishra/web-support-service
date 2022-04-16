@@ -37,6 +37,12 @@ try {
 	mon.connect(mongo_URI, mongo_options);
 } catch (e) {
 	console.error('Unable to conect to storage: not storing anything');
+} finally {
+	if (mon.connection) {
+		console.info('Database Status: ' + mon.connection.readyState);
+	} else {
+		console.warn('NOT READY FOR DEPLOYMENT');
+	}
 }
 
 // load routes
