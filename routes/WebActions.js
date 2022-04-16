@@ -16,8 +16,10 @@ router.use((req, res, next) => {
 // Configure cors options
 const corsOptions = {
 	origin: [
+
 		// Add all hosts for which requests would be accepted.
-		// NOTE: DO NOT ADD HTTP links. HTTPS only for requests.
+		'http://www.crazydeveloper.fail', // HTTP for crazydeveloper host - TODO: remove after moving to GCP
+		'http://rmishra.me', // HTTP endpoint for rmishra.me - TODO: remove after moving to GCP
 		'https://www.crazydeveloper.fail', // crazydeveloper host
 		'https://rmishra.me', // Personal Website
 		'https://www.rmishra.me' // Alt path
