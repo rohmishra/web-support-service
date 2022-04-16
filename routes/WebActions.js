@@ -28,7 +28,7 @@ const corsOptions = {
 };
 
 // Add cors to preflight / OPTIONS
-// router.options('*', cors(corsOptions));
+router.options('*', cors(corsOptions));
 
 // Service reach by email requests for rmishra.me
 router.post('/rme_cb_act_email', cors(corsOptions), async (req, res) => {
