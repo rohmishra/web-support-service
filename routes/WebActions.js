@@ -1,7 +1,7 @@
 const express = require('express');
 const userModel = require('../models/ConsultUser.js');
 const cors = require('cors');
-const mailgun = require('mailgun-js'); // TODO: require mailgun and send email to verify user email
+// const mailgun = require('mailgun.js'); // TODO: require mailgun and send email to verify user email
 var router = express.Router();
 
 // DEV MODE LOGGING
@@ -51,33 +51,33 @@ router.post('/rme_cb_act_email', cors(corsOptions), async (req, res) => {
 	}
 
 	// TODO: Send email verification
-	const DOMAIN = process.env.DOMAIN;
-	const mg = mailgun({
-		apiKey: process.env.MG_API_KEY,
-		domain: DOMAIN
-	});
-	const data = {
-		from: process.env.FROM_TEXT || 'email verification',
-		to: email,
-		subject: `Hi, ${name} Lets Talk!`,
-		template: 'contact_verification',
-		'h:X-Mailgun-Variables': {
-			email_base64: Buffer.from(email, 'utf8').toString('base64'),
-			unique_token: user.verification_token
-		}
-	};
-	try {
-		mg.messages().send(data, function (error, body) {
-			if (envmode === 'DEV') {
-				console.log(body);
-			}
-		});
-	} catch (e) {
-		console.message('=== Couldn\'t send email ===');
-		console.log(e);
-	}
+	// const DOMAIN = process.env.DOMAIN;
+	// const mg = mailgun({
+	// 	apiKey: process.env.MG_API_KEY,
+	// 	domain: DOMAIN
+	// });
+	// const data = {
+	// 	from: process.env.FROM_TEXT || 'email verification',
+	// 	to: email,
+	// 	subject: `Hi, ${name} Lets Talk!`,
+	// 	template: 'contact_verification',
+	// 	'h:X-Mailgun-Variables': {
+	// 		email_base64: Buffer.from(email, 'utf8').toString('base64'),
+	// 		unique_token: user.verification_token
+	// 	}
+	// };
+	// try {
+	// 	mg.messages().send(data, function (error, body) {
+	// 		if (envmode === 'DEV') {
+	// 			console.log(body);
+	// 		}
+	// 	});
+	// } catch (e) {
+	// 	console.message('=== Couldn\'t send email ===');
+	// 	console.log(e);
+	// }
 
-	res.send('Received!');
+	res.send('Received! ' + user.name);
 });
 
 module.exports = router;
