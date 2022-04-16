@@ -49,9 +49,24 @@ try {
 const webActions = require('./routes/WebActions.js'); // WebActions
 App.use('/WebActions', webActions);
 
+// Redirect to homepage
 App.get('/', (req, res) => {
 	res.redirect(302, `//${process.env.DOMAIN}`);
 });
+
+// unknown endpoint error handler
+App.use((req, res, next) => {
+	var err = new Error('No suitable endpoint for ' + req.url);
+	err.status = 404;
+	next(err);
+});
+
+// Catch all
+App.use((err, req, res) => {
+	res.status(err.status || 500);
+	res.send(err.message);
+});
+
 
 App.listen(serve_port, () => {
 	console.log(`listening on ${serve_port}. Connecting to DB`);
