@@ -1,18 +1,13 @@
-const dotenv = require('dotenv');
 const express = require('express');
 const bodyparser = require('body-parser');
 const mon = require('mongoose');
 
-// Load env vars
-if (envmode != 'live') {
-	dotenv.config();
-}
+const envmode = process.env.NODE_ENV || 'DEV';
 
 const App = express();
 App.use(bodyparser.json());
 
 // Config for TEST MODE.
-const envmode = process.env.NODE_ENV || 'DEV';
 if (envmode != 'live') {
 	console.info(`Running in ${envmode} mode.`);
 	const logger = require('morgan'); // Adds Logging for dev mode.
@@ -28,8 +23,8 @@ if (envmode === 'ci') {
 }
 
 // Config
-const serve_port = process.env.mongo_port;
-const mongo_URI = process.env.MONGODB_URI;
+const serve_port = process.env.PORT || null;
+const mongo_URI = process.env.MONGODB_URI || null;
 
 const mongo_options = {
 	useNewUrlParser: true,
