@@ -24,11 +24,12 @@ if (envmode === 'ci') {
 
 // Config
 const serve_port = process.env.PORT || 80018;
-const mongo_URI = `mongodb+srv://${process.env.GCPATL_USR}:${process.env.GCPATL_KEY}@${process.env.MONGODB_URI }`;
+const mongo_URI = `mongodb+srv://${process.env.GCPATL_USR}:${process.env.GCPATL_KEY}@${process.env.MONGODB_URI}`;
 
 const mongo_options = {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	dbName: process.env.dbName
 };
 
 // Connect to DB.
