@@ -39,7 +39,7 @@ try {
 	console.error('Unable to conect to storage: not storing anything');
 } finally {
 	if (mon.connection) {
-		console.info('Database Status: ' + mon.connection.readyState);
+		console.info(`Database Status: ${mon.connection.readyState} for ${mongo_URI}`);
 	} else {
 		console.warn('NOT READY FOR DEPLOYMENT');
 	}
