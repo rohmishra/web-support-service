@@ -23,8 +23,8 @@ if (envmode === 'ci') {
 }
 
 // Config
-const serve_port = process.env.PORT || null;
-const mongo_URI = process.env.MONGODB_URI || null;
+const serve_port = process.env.PORT || 80018;
+const mongo_URI = `mongodb+srv://${process.env.GCPATL_USR}:${process.env.GCPATL_KEY}@${process.env.MONGODB_URI }`;
 
 const mongo_options = {
 	useNewUrlParser: true,
@@ -32,7 +32,11 @@ const mongo_options = {
 };
 
 // Connect to DB.
-mon.connect(mongo_URI, mongo_options);
+try {
+	mon.connect(mongo_URI, mongo_options);
+} catch (e) {
+	console.error('Unable to conect to storage: not storing anything');
+}
 
 // load routes
 const webActions = require('./routes/WebActions.js'); // WebActions
